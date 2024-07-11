@@ -5,7 +5,7 @@ import Navbar from './Components/Navbar'; // Ensure you have a Navbar component
 import Home from './Components/Home'; // Ensure you have a Home component
 import Login from './Components/Register'; // Import Login component
 import Signup from './Components/Login'; // Import Signup component
-import AddUser from './Components/Adduser'; // Import AddUser component
+import AddStudent from './Components/AddStudent'; // Import AddUser component
 import NotFound from './Components/NotFound'; // Ensure you have a NotFound component
 
 function App() {
@@ -24,8 +24,8 @@ function App() {
             <Route path="/login">
               <Signup />
             </Route>
-            <Route path="/adduser">
-              <AddUser />
+            <Route path="/AddStudent">
+              <AddStudent />
             </Route>
             <Route path="*">
               <NotFound />
