@@ -7,6 +7,7 @@ import Login from './Components/Register'; // Import Login component
 import Signup from './Components/Login'; // Import Signup component
 import AddStudent from './Components/AddStudent'; // Import AddUser component
 import NotFound from './Components/NotFound'; // Ensure you have a NotFound component
+import GetMyStudents from './Components/GetMyStudents';
 
 function App() {
   return (
@@ -26,6 +27,9 @@ function App() {
             </Route>
             <Route path="/AddStudent">
               <AddStudent />
+            </Route>
+            <Route path="/GetMyStudents">
+              <GetMyStudents />
             </Route>
             <Route path="*">
               <NotFound />

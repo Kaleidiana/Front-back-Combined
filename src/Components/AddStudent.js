@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import { Form, Button } from 'react-bootstrap'; // Import Form and Button from react-bootstrap
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
 
 const AddStudent = () => {
   const [data, setData] = useState({
@@ -23,17 +20,16 @@ const AddStudent = () => {
 
     const token = sessionStorage.getItem('access_token');
 
-    axios
-      .post(
-        'http://localhost:4000/addStudents',
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+    axios.post(
+      'http://localhost:4000/addStudents',
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    )
       .then((res) => {
         toast.success('New student added successfully', {
           position: toast.POSITION.TOP_RIGHT,
@@ -51,7 +47,7 @@ const AddStudent = () => {
   return (
     <div className="col-md-6 offset-md-3 addStudent">
       <h3 className="mytext"> Add Student</h3>
-      <Form onSubmit={saveStudent}>
+      <Form onSubmit={saveStudent} className="addStudentForm">
         <Form.Group className="mb-3" controlId="formBasicFirstname">
           <Form.Label>Firstname:</Form.Label>
           <Form.Control
