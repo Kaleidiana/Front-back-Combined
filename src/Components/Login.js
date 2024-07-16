@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from 'react-router-dom';
 
 const App = () => {
   const [form, setForm] = useState({
@@ -8,6 +9,8 @@ const App = () => {
   });
 
   const [errors, setErrors] = useState({});
+
+  const history = useHistory();
 
   const handleChange = (e) => {
     setForm({
@@ -30,38 +33,42 @@ const App = () => {
     if (validate()) {
       console.log('Form submitted successfully', form);
       // Here you can add the logic to send the form data to your server or an API.
+      
+      // Redirect to the home page after successful form submission
+      history.push("/");
     }
   };
 
   return (
-    <div className="App">
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Username</label>
-          <input
-            type="text"
-            name="username"
-            value={form.username}
-            onChange={handleChange}
-          />
-          {errors.username && <span className="error">{errors.username}</span>}
-        </div>
-        <div className="form-group">
-          <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-          />
-          {errors.email && <span className="error">{errors.email}</span>}
-        </div>
-    
-        <button type="submit">Sign Up</button>
-        
-      </form>
-    </div>
+    <Router>
+      <div className="App">
+        <h2>Login</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Username</label>
+            <input
+              type="text"
+              name="username"
+              value={form.username}
+              onChange={handleChange}
+            />
+            {errors.username && <span className="error">{errors.username}</span>}
+          </div>
+          <div className="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+            />
+            {errors.email && <span className="error">{errors.email}</span>}
+          </div>
+      
+          <button type="submit">Sign Up</button>
+        </form>
+      </div>
+    </Router>
   );
 };
 

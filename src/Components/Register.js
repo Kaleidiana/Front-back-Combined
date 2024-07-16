@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.css';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const Create = () => {
   const [data, setData] = useState({
@@ -12,6 +12,7 @@ const Create = () => {
   });
 
   const [error, setError] = useState('');
+  const history = useHistory();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,6 +38,9 @@ const Create = () => {
 
     // Example: Sending data to the server or performing further actions
     console.log('Form submitted successfully', data);
+
+    // Redirect to home page after successful registration
+    history.push('/');
   };
 
   return (
@@ -83,9 +87,8 @@ const Create = () => {
         {error && <p className="error">{error}</p>}
       </Form>
       <p>
-      Already have an account? <Link to="/login" className="button-link">Login</Link>
+        Already have an account? <Link to="/login" className="button-link">Login</Link>
       </p>
-
     </div>
   );
 };

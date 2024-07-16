@@ -42,13 +42,15 @@ const GetMyStudents = () => {
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
                     {/* Adjusted Link to use correct syntax */}
-                    <Link to={`/UpdateStudent/${r.student_id}`} className="dropdown-item">
+                    <Link to={`/UpdateStudent/${r._id}`} className="dropdown-item">
                       Edit student
                     </Link>
-                    
-                    <Link to={`/UpdateStudent/${r.student_id}`} className="dropdown-item">
+
+                    {/* /*Link to deleting a student */ }
+                    <Link to={`/UpdateStudent/${r._id}`} className="dropdown-item">
                       Delete student
                     </Link>
+            
                   </Dropdown.Menu>
                 </Dropdown>
               </td>

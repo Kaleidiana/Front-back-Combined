@@ -8,6 +8,7 @@ import Signup from './Components/Login'; // Import Signup component
 import AddStudent from './Components/AddStudent'; // Import AddUser component
 import NotFound from './Components/NotFound'; // Ensure you have a NotFound component
 import GetMyStudents from './Components/GetMyStudents';
+import UpdateStudent from './Components/UpdateStudent';
 
 function App() {
   return (
@@ -30,6 +31,9 @@ function App() {
             </Route>
             <Route path="/GetMyStudents">
               <GetMyStudents />
+            </Route>
+            <Route path="/UpdateStudent/:_id">
+              <UpdateStudent />
             </Route>
             <Route path="*">
               <NotFound />
