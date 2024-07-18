@@ -47,7 +47,7 @@ const GetMyStudents = () => {
                     </Link>
 
                     {/* /*Link to deleting a student */ }
-                    <Link to={`/UpdateStudent/${r._id}`} className="dropdown-item">
+                    <Link to={`/DeleteStudent/${r._id}`} className="dropdown-item">
                       Delete student
                     </Link>
             

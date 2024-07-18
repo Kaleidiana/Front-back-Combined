@@ -1,131 +1,207 @@
-import React, { useState, useEffect } from 'react';
+import {useEffect, useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import { Form, Button } from 'react-bootstrap';
-import { ToastContainer, toast } from 'react-toastify';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 
-const UpdateStudent = () => {
-  const { _id } = useParams(); // Get _id from URL params
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState({
-    _id: '',
-    firstname: '',
-    lastname: '',
-    gender: '',
-  });
+//import Form from 'react-bootstrap/Form';
+import {Form} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
 
-  useEffect(() => {
-    const fetchStudent = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(`http://localhost:4000/getStudent/${_id}`);
-        const studentData = response.data;
+
+//import {ScaleLoader} from 'react-spinners';
+//import {spinnerOverride} from '../spinnerStyles'
+
+
+
+const UpdateStudent =() => {
+
+    const { id }  = useParams();
+    //const baseURL = process.env.REACT_AAPP_BASE_URL
+    //const [loading, setLoading] = useState(false);
+
+
+
+    useEffect(() => {
+
+      //console.log('id',id)
+        //const token = sessionStorage.getItem("accessToken")
+        //console.log("student_id", student_id);
+
+       //setLoading(true);
+
+       axios.get(`http://localhost:4000/getStudent/${id}`,{
+
+        /*headers:{
+          Authorization: Bearer ${token},
+          'Content-Type': 'application/json',
+        },*/
+      })
+
+      .then(res => {
+   
         setData({
-          _id: studentData._id,
-          firstname: studentData.firstname,
-          lastname: studentData.lastname,
-          gender: studentData.gender,
+        
+            id: res.data._id,
+            firstname: res.data.firstname,
+            lastname: res.data.lastname,
+            gender: res.data.gender
+
         });
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching student:', error);
-        setLoading(false);
-      }
-    };
 
-    fetchStudent();
-  }, [_id]);
+        /*.catch(err =>console.log(err)).finally(() =>{
+          setLoading(false);
+       });*/
 
-  const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      // Update student data in MongoDB via PATCH request
-      await axios.patch(`http://localhost:4000/updateStudent/${_id}`, data);
-
-      // Update local state with new data
-      setData(data); // Optionally update local state if needed
-
-      // Display success toast
-      toast.success('Student updated successfully', {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 3000,
       });
 
-      // Example: Reload list of students after update (assuming you have a function for this)
-      // reloadStudents(); // You should implement a function to reload the list of students from the server
-    } catch (error) {
-      console.error('Error updating student:', error);
-      toast.error('An error occurred while updating the student', {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 3000,
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  return (
-    <div>
-      <Form onSubmit={handleSubmit}>
-        <h3 className="createHeading">Update Student</h3>
-        <Form.Group className="mb-3" controlId="student_id">
-          <Form.Label>Student ID:</Form.Label>
-          <Form.Control
-            type="text"
-            value={data._id}
-            disabled
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="firstname">
-          <Form.Label>Firstname:</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter Firstname"
-            value={data.firstname}
-            onChange={handleChange}
-            name="firstname"
-            required
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="lastname">
-          <Form.Label>Lastname:</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter Lastname"
-            value={data.lastname}
-            onChange={handleChange}
-            name="lastname"
-            required
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="gender">
-          <Form.Label>Gender:</Form.Label>
-          <Form.Control
-            as="select"
-            value={data.gender}
-            onChange={handleChange}
-            name="gender"
-            required
-          >
-            <option value="">--Select Gender--</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-          </Form.Control>
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Update Student
-        </Button>
-      </Form>
-      <ToastContainer />
-    </div>
-  );
-};
+    },[id]);
+
+
+    const [data, setData] = useState({
+        _id: "",
+        firstname: "",
+        lastname: "",
+        gender: ""
+    });
+
+const handleChange = (e) => {
+    setData({...data, [e.target.name]: e.target.value });
+}
+
+//................................................................
+
+const UpdateStudent = (e) => {
+
+    e.preventDefault()
+
+//const token = sessionStorage.getItem("accessToken")
+        
+       //setLoading(true);
+
+       axios.patch(`http://localhost:4000/updateStudent/${id}`, data, {
+        /*headers:{
+          Authorization: Bearer ${token},
+          'Content-Type': 'application/json',
+        },*/
+       })
+
+       //.then(res=>console.log(res));
+       .then(res => {
+
+        toast.success('Student updated successfully',{
+            position : toast.POSITION.TOP_RIGHT,
+            autoClose: 3000,
+        })
+        //navigate ('/UnitofMeasurement)
+       })
+    
+        //.then(res=>console.log(res));
+
+
+        .catch (err => {
+            toast.error('An error occured while updating the Student ', {
+              position : toast.POSITION.TOP_RIGHT,
+              autoClose: 3000,
+            });
+        
+        })/*.finally(() => {
+            setLoading(false)
+        })*/
+
+
+
+}
+
+return (
+
+
+
+  <div>
+
+
+
+
+
+  <Form onSubmit={UpdateStudent }>
+
+  <h3 className="createHeading"> Update Student  </h3>
+
+
+  <Form.Group className="mb-3" controlId="student_id">
+
+<Form.Label>id: </Form.Label>
+<Form.Control  type="input"  required
+ placeholder="Enter Student Name"
+
+onChange={handleChange}
+
+value={data.id}
+name="id"
+disabled="disabled"
+hidden
+/>
+</Form.Group>
+
+    <Form.Group className="mb-3" controlId="student_id">
+
+      <Form.Label>Firstname:</Form.Label>
+      <Form.Control  type="input"  required
+       placeholder="Enter Student Name"
+
+      onChange={handleChange}
+
+      value={data.firstname}
+    name="firstname"
+     />
+    </Form.Group>
+
+
+    <Form.Group className="mb-3" controlId="unit">
+      <Form.Label>Lastname:</Form.Label>
+      <Form.Control    
+      
+      type="input"
+placeholder="Enter Student Name"
+required 
+onChange={handleChange}
+value={data.lastname}
+name="lastname"
+ 
+      />
+    </Form.Group>
+
+
+    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+    <Form.Select  name="gender" value={data.gender}  onChange={handleChange}>
+    <option>--Gender</option>
+    <option>Male</option>
+    <option>Female</option>
+    </Form.Select>
+    </Form.Group>
+
+
+
+
+    
+
+    <Button variant="primary" type="submit"> Update Student </Button>
+    
+    <ToastContainer/>
+
+  </Form>
+</div>
+
+
+
+
+
+
+
+
+)
+}
 
 export default UpdateStudent;
